@@ -8,7 +8,7 @@ Description: Package to analyse time series of tree apical growth.
 License: What license is it under?
 Imports:
   cowplot,
-  dplr,
+  dplR,
   ggplot2,
 Suggests:
   Rcmdr,
