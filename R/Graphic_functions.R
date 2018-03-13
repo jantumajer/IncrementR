@@ -5,7 +5,7 @@
 ### Arguments of this function are: trw (variable containing trii-ring series),
 ###                                 ecc (variable containing calculated eccentricity - result of function Eccentricity),
 ###                                 arguments plot and tree (specify which tree data will be vizualized),
-###                                 meta (variable containing metadata including height of sampling points),
+###                                  meta (variable containing metadata including height of sampling points),
 ###                                 withEccentricity (specify if stem eccentricity curves will be vizualized) ,
 ###                                 and argument method (specify according which method will be vizualized eccentricity curves).
 ######################
