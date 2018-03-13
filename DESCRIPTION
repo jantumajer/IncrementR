@@ -6,12 +6,5 @@ Author: Jakub Kaspar, Jan Tumajer, Vaclav Treml
 Maintainer: Jan Tumajer <tumajerj@natur.cuni.cz>
 Description: Package to analyse time series of tree apical growth.
 License: What license is it under?
-Imports:
-  cowplot,
-  dplR,
-  ggplot2,
-Suggests:
-  Rcmdr,
-  xlsx,
 Encoding: UTF-8
 LazyData: true
