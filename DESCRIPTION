@@ -5,6 +5,6 @@ Version: 0.1.0
 Author: Jakub Kaspar, Jan Tumajer, Vaclav Treml
 Maintainer: Jan Tumajer <tumajerj@natur.cuni.cz>
 Description: Package to analyse time series of tree apical growth.
-License: What license is it under?
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
