@@ -2,7 +2,7 @@
 
 ```Eccentricity(trw.series, complete=FALSE)```
 
-Function `Eccentricity` calculates eccentricity indices according to Braam et al. (1987), Alestalo (1971) and Schweingruber (1996) for each tree-ring. This function requires the input of four cross-dated series per tree and/or sampling level (argument `trw.series`). Argument complete defines whether four samples were obtained for all sampling levels. If some of required samples are missing, then `complete=F`. The output of this function is a list containing three data frames with values of eccentricity indices for each method and each orientation around the stem circumference.
+> Function `Eccentricity` calculates eccentricity indices according to Braam et al. (1987), Alestalo (1971) and Schweingruber (1996) for each tree-ring. This function requires the input of four cross-dated series per tree and/or sampling level (argument `trw.series`). Argument complete defines whether four samples were obtained for all sampling levels. If some of required samples are missing, then `complete=F`. The output of this function is a list containing three data frames with values of eccentricity indices for each method and each orientation around the stem circumference.
 
 ```EMR(trw.series, nyrs, p.off, method="TRW")```
 
