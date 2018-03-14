@@ -1,3 +1,19 @@
+# IncrementR package: Analysing height growth of trees in R
+
+This package is designed to be used by members of dendrochronological comunity, especially those people, who analyse height growth of trees. Specific tools were developed for input data in the form of tree-ring widths extracted from series of successive stem height levels. The main computed parameters provided by the package include height growth along the stem, changes of stem eccentricity, basal area increment considering elliptical tree-rings, and stem taper. The appropriate determination of average height growth depends on correct estimation of the number of tree-rings in different stem levels, which might be complicated by missing rings in off-pith cores. The presented package therefore contains also functions for common procedures for estimation of the number of missing tree-rings. Graphical visualisation of most results is possible. 
+
+# Installing instructions
+
+Recently, the package is available only from GitHub using devtools package. Use following syntax to install and load it in your R.
+
+```
+install.packages(devtools)
+library(devtools)
+
+install_github("jantumajer/IncrementR")
+library(IncrementR)
+```
+
 # Function syntax and descriptions
 
 ```Eccentricity(trw.series, complete=FALSE)```
