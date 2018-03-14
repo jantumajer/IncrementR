@@ -4,7 +4,7 @@ Title: Analysing tree height growth in R
 Version: 0.1.0
 Author: Jakub Kaspar, Jan Tumajer, Vaclav Treml
 Maintainer: Jan Tumajer <tumajerj@natur.cuni.cz>
-Description: Package to analyse time series of tree apical growth.
+Description: Package to analyse time series of tree height growth.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
