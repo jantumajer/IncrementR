@@ -7,7 +7,7 @@ This package is designed to be used by members of dendrochronological comunity, 
 Recently, the package is available only from GitHub using devtools package. Use following syntax to install and load it in your R.
 
 ```
-install.packages(devtools)
+install.packages("devtools")
 library(devtools)
 
 install_github("jantumajer/IncrementR")
