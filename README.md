@@ -16,7 +16,7 @@ library(IncrementR)
 
 # Example data
 
-Instalation of IncrementR package contains tree sample data frames related to apical growth of single tree located in Hruby Jesenik Mts. (Czech Republic). Data frame `trw` stores cross-dated tree-ring widths obtained by coring tree stem in successive levels from stem base to the top. Data frame `po` contains estimates of the distance between last measured tree-ring and pith for off-pith cores (in mm). Finally, dataframe `meta` stores infomration about distance of individual sampling levels from the ground (in cm).
+Instalation of IncrementR package contains sample data frames related to apical growth of single tree located in Hruby Jesenik Mts. (Czech Republic). Data frame `trw` stores cross-dated tree-ring widths obtained by coring tree stem in successive levels from stem base to the top. Data frame `po` contains estimates of the distance between last measured tree-ring and pith for off-pith cores (in mm). Finally, data frame `meta` stores information about distance of individual sampling levels from the ground (in cm).
 
 Use folowing syntax to access sample data:
 
