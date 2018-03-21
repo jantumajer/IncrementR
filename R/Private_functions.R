@@ -299,6 +299,29 @@
   return(graf)
 }
 .plotGraph<-function(plot,tree,heights,trw,ecc,withEccentricity=F,direction="North-South",rangeX){
+  ID<-.IDdistinct(trw, F)
+  subID<-subset(ID$IDAspect,IDPlot==plot & IDTree==tree)
+  subID<-subID[order(subID$IDLevel),]
+  subTRW<-trw[,subID$N.OC]
+  datetTo<-max(as.numeric(rownames(subTRW)))
+  
+  TotalRing<-NULL
+  for(i in 1:length(subID$IDPlot)){
+    tr<-c(as.character(subID$N.OC[i]),
+          as.character(subID$S.OC[i]),
+          as.character(subID$W.OC[i]),
+          as.character(subID$E.OC[i]))
+    t<-trw[,tr]
+    lngths<-c(length(na.omit(t[,1])),
+              length(na.omit(t[,2])),
+              length(na.omit(t[,3])),
+              length(na.omit(t[,4])))
+    l<-round(median(lngths)+0.01)
+    TotalRing<-c(TotalRing,l)
+  }
+  calendarYears<-rep(datetTo,length(TotalRing))
+  calendarYears<-calendarYears-TotalRing
+  calendarYears<-c(calendarYears,datetTo)
   left<-0
   right<-0
   met<-subset(.IDdistinct(trw)$IDAspect,IDPlot==plot & IDTree==tree)
@@ -318,7 +341,8 @@
     ;
   }
   graph<-graph+scale_x_continuous(name="Stem width (cm)",limits=rangeX, breaks=seq(rangeX[1],rangeX[2],((abs(rangeX[1])+abs(rangeX[2]))/10)), labels=abs(seq(rangeX[1],rangeX[2],((abs(rangeX[1])+abs(rangeX[2]))/10))))
-  graph<-graph+scale_y_continuous(name="Stem height (cm)",limits=c(0,ceiling(max(heights)/100)*100),breaks=heights,labels=heights)
+  graph<-graph+scale_y_continuous(name="Stem height (cm)",limits=c(0,ceiling(max(heights)/100)*100),breaks=heights,labels=heights,
+                                  sec.axis=sec_axis(~.,breaks=heights,labels=calendarYears,name="Calendar year"))
   return(graph)
 }
 .dataLine<-function(ecc,met){
