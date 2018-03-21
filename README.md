@@ -68,6 +68,6 @@ If the number of estimated tree-rings differs from the other cores of the same h
 
 > Taper between consecutive sampling levels can be plot by `taperCalculation` function as a line-chart. Argument `taperFile` is the output of `taperCalculation` function; arguments `plot` and `tree` specify tree to have the taper drawn; and logical argument `variant` specifies whether taper or taper angle will be drawn (available options are `“Taper”` or `“Angle”`).
 
-```drawApicalData(apicalData, plot=1, tree=1)```
+```drawApicalData(trw.series, apicalData, plot=1, tree=1)```
 
-> Arguments of `drawApicalData` function include `apicalData` (output of `apical` function); and `plot` and `tree` (specifying the tree to be visualized). The resulting plot consist of two parts – the left panel shows the number of “Total” tree-rings (i.e., measured tree-rings + estimated missing tree-rings nearby pith) in each sampling level along the stem; the right one shows mean height growth velocity between two consecutive sampling levels (points) together with mean errors of its estimates (error bars). 
+> Arguments of `drawApicalData` function include `trw.series` (data frame containing tree-ring width series) `apicalData` (output of `apical` function); and `plot` and `tree` (specifying the tree to be visualized). The resulting plot consist of two parts – the left panel shows the number of “Total” tree-rings (i.e., measured tree-rings + estimated missing tree-rings nearby pith) in each sampling level along the stem; the right one shows mean height growth velocity between two consecutive sampling levels (points) together with mean errors of its estimates (error bars). 
