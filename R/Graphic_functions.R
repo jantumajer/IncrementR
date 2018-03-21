@@ -65,7 +65,7 @@ drawCrossSectionProfile<-function(trw,plot=1,tree=1,level=1,show.legend=T){
   }
   graph<-ggplot(elipse,aes(x,y)) + geom_point(aes(colour = factor(calYear)),size=0.01)+geom_path(aes(colour = factor(calYear)),size=0.5)+scale_fill_brewer(palette="Spectral")
   graph<-graph + scale_x_continuous(limits = lim, breaks=seq(lim[1],lim[2],10), labels=abs(seq(lim[1],lim[2],10))) + scale_y_continuous(limits = lim, breaks=seq(lim[1],lim[2],10), labels=abs(seq(lim[1],lim[2],10)))
-  graph<-graph + labs(colour="Calendar year", x="East     <-  ->     West", y="South     <-  ->     North")
+  graph<-graph + labs(colour="Calendar year", x="East     <-  ->     West     (mm)", y="South     <-  ->     North     (mm)")
   if(show.legend==T){graph<-graph+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))}
   else{graph<-graph+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"),legend.position="none")}
   return(graph)
@@ -140,51 +140,60 @@ drawTaper<-function(taperFile,plot=1,tree=1,variant="Taper"){
 ###                                 arguments plot and tree (specify which tree data will be vizualized).
 ######################
 
-drawApicalData<-function(apicalData,plot=1,tree=1){
-
+drawApicalData<-function(trw.series,apicalData,plot=1,tree=1){
+  
+  ID<-.IDdistinct(trw.series, F)
+  subID<-subset(ID$IDAspect,IDPlot==plot & IDTree==tree)
+  subTRW<-trw.series[,subID$N.OC]
+  datetTo<-max(as.numeric(rownames(subTRW)))-1
+  
   dta<-subset(apicalData$N.ring_Level, IDPlot==plot & IDTree==tree)
   dta$Speed.cmyr[dta$Speed.cmyr < 0] <- 0
   dots<-data.frame(where=rep(0,(dta$TotalRing[1]-dta$TotalRing[length(dta$TotalRing)]+1)),
                    howmany=seq(dta$TotalRing[1],dta$TotalRing[length(dta$TotalRing)],-1))
-
+  calendarYears<-rep(datetTo,length(dta$IDLevel))
+  calendarYears<-calendarYears-dta$TotalRing+1
+  calendarYears<-c("Base",calendarYears)
+  
   d<-NULL
   for(i in 2:length(dta$TotalRing)){
     j<-i-1
-
+    
     d1<-seq(from=dta$Height.cm[j],to=(dta$Height.cm[i]-dta$Speed.cmyr[i]),by=dta$Speed.cmyr[i])
     d<-c(d,d1)
   }
-
+  
   d<-c(d,dta$Height.cm[length(dta$TotalRing)])
   d<-round(d,1)
   dots$where<-d
-
+  
   koef<-floor(max(dots$howmany)*0.1+1)*10
   maxError<-floor(((max(dta$Speed.cmyr,na.rm=T)+max(dta$MeanSpeedError.cmyr,na.rm=T))/10)+1)*10
   maxX<-floor(max(dta$Height.cm)*0.01+1)*100
-
-
+  
+  
   g1<-ggplot(data=dots,aes(x=howmany,y=where))+geom_area()
   g1<-g1 + scale_x_continuous(limits = c(0,koef), breaks=seq(0,koef,(koef/5)), labels=seq(0,koef,(koef/5)),"Number of tree rings")
-  g1<-g1 + scale_y_continuous(limits = c(0,maxX), breaks=c(0,dta$Height.cm), labels=c(0,dta$Height.cm),"Stem height (cm)")
+  g1<-g1 + scale_y_continuous(limits = c(0,maxX), breaks=c(0,dta$Height.cm), labels=c(0,dta$Height.cm),"Stem height (cm)",
+                              sec.axis=sec_axis(~.,breaks=c(0,dta$Height.cm),labels=calendarYears,name="Calendar year"))
   g1
-
+  
   grp<-dta$Speed.cmyr
   grp<-replace(grp, grp<0, "B")
-  grp<-replace(grp, grp>0, "A")
-  grp[3]<-"B"
+  grp<-replace(grp, grp>=0, "A")
   dta_ap<-data.frame(height=dta$Height.cm,
                      speed=dta$Speed.cmyr,
                      error=dta$MeanSpeedError.cmyr,
                      group=grp)
   group.colors <- c(A = "#000000", B = "#990000")
-
+  
   g2<-ggplot(data=dta_ap,aes((speed),height,group=group,color=group))+ geom_point(size=3) + geom_errorbarh(aes(xmin=(speed)-error, xmax=(speed)), size=1.25, height=0)+scale_color_manual(values=c(A = "#000000", B = "#990000"))
   g2<-g2 + scale_x_continuous(limits = c(0,maxError), breaks=seq(0,maxError,(maxError/5)), labels=seq(0,maxError,(maxError/5)),"Height growth (cm.year-1)")
-  g2<-g2 + scale_y_continuous(limits = c(0,maxX), breaks=c(0,dta$Height.cm), labels=c(0,dta$Height.cm),"Stem height (cm)",position = "right")
+  g2<-g2 + scale_y_continuous(limits = c(0,maxX), breaks=c(0,dta$Height.cm), labels=c(0,dta$Height.cm),"Stem height (cm)",position = "right",
+                              sec.axis=sec_axis(~.,breaks=c(0,dta$Height.cm),labels=calendarYears))
   g2<-g2 + theme(legend.position = "none")
   g2
-
-
+  
+  
   plot_grid(g1, g2, ncol = 2, nrow = 1)
 }
