@@ -177,7 +177,7 @@ taperCalcul<-function(trw.series,meta){
 ### 3] mean of 1] and 2] (adviced by Altman et al. (2016): Forest Ecology and Management, 380:82-89 as the aproach with the lowest bias)
 ###########################################
 
-EMR <- function(trw.series, nyrs, p.off, method="TRW"){
+EMR <- function(trw.series, p.off, nyrs, method="TRW"){
   j<-1
   tab <- data.frame(MissingRings=NA, Series=NA)
 
