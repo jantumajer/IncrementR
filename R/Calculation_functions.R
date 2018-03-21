@@ -88,42 +88,42 @@ BAIcalculation<-function(trw.series){
 ###########################################
 
 taperCalcul<-function(trw.series,meta){
-
+  
+  #trw.series<-trw
+  
   IDa<-.IDdistinct(trw.series)
   ID<-IDa$IDAspect
-  res<-data.frame(plot=ID$IDPlot,tree=ID$IDTree,level=ID$IDLevel,level.height=rep(0,length(ID$IDPlot)),taper=rep(0,length(ID$IDPlot)),taper.angle=rep(0,length(ID$IDPlot)))
-
-  for(i in 1:length(ID$IDPlot)){
-    IDB<-ID[i,]
-    j<-IDB$IDLevel+1
-    subMeta1<-subset(meta,Plot_ID==IDB$IDPlot & Tree_ID==IDB$IDTree & Level_ID==IDB$IDLevel)
-    sb<-length(subset(meta,Plot_ID==IDB$IDPlot & Tree_ID==IDB$IDTree))+1
-    if(j>sb)j<-999
-    subMeta2<-subset(meta,Plot_ID==IDB$IDPlot & Tree_ID==IDB$IDTree & Level_ID==j)
-    treeHeight1<-subMeta1$Level_cm
-    treeHeight2<-subMeta2$Level_cm
-    treeHeight<-as.numeric(treeHeight2)-as.numeric(treeHeight1)
-
-    ser.n <- toString(IDB$N.OC)
-    ser.s <- toString(IDB$S.OC)
-    ser.e <- toString(IDB$E.OC)
-    ser.w <- toString(IDB$W.OC)
-    w <- trw.series[,c(ser.n, ser.s, ser.e, ser.w)]
-    if(length(w[,1])!=length(w[,2]) | length(w[,1])!=length(w[,3]) | length(w[,1])!=length(w[,4])){w <- .replace(w)}
-    widths<-.widthsCalculation(w)
-    last<-length(widths$cambAge)
-    oNW<-(pi*sqrt(2*(widths$N[last]*widths$N[last]+widths$W[last]*widths$W[last])))/4
-    oSW<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$W[last]*widths$W[last])))/4
-    oNE<-(pi*sqrt(2*(widths$N[last]*widths$N[last]+widths$E[last]*widths$E[last])))/4
-    oSE<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$E[last]*widths$E[last])))/4
-    oElipse1<-oNW+oSW+oNE+oSE
-
-    if(j!=999){
-      IDC<-ID[j,]
-      ser.n <- toString(IDC$N.OC)
-      ser.s <- toString(IDC$S.OC)
-      ser.e <- toString(IDC$E.OC)
-      ser.w <- toString(IDC$W.OC)
+  res<-data.frame(plot=numeric(0),tree=numeric(0),level=numeric(0),level.height=numeric(0),taper=numeric(0),taper.angle=numeric(0))
+  
+  trees<-paste(ID$IDPlot, ID$IDTree, sep="_")
+  not<-unique(trees)
+  
+  for(i in 1:length(not)){
+    split <- strsplit(not[i], "_")
+    unl <- unlist(split)
+    plot<-as.numeric(unl[1])
+    tree<-as.numeric(unl[2])
+    sbTree<-subset(ID,IDPlot==plot & IDTree==tree)
+    sbTree<-sbTree[order(sbTree$IDLevel),] 
+    print(sbTree)
+    for(j in 1:(length(sbTree[,1]))){
+      print(j)
+      ID_1<-subset(sbTree,IDLevel==sbTree$IDLevel[j])
+      ID_2<-subset(sbTree,IDLevel==sbTree$IDLevel[(j+1)])
+      #print(ID_1)
+      #print(ID_2)
+      subMeta1<-subset(meta,Plot_ID==ID_1$IDPlot & Tree_ID==ID_1$IDTree & Level_ID==ID_1$IDLevel)
+      subMeta2<-subset(meta,Plot_ID==ID_1$IDPlot & Tree_ID==ID_1$IDTree & Level_ID==ID_2$IDLevel)
+      if(nrow(subMeta2) == 0){
+        subMeta2<-subset(meta,Plot_ID==ID_1$IDPlot & Tree_ID==ID_1$IDTree & Level_ID==999)
+      }
+      treeHeight1<-subMeta1$Level_cm
+      treeHeight2<-subMeta2$Level_cm
+      treeHeight<-as.numeric(treeHeight2)-as.numeric(treeHeight1)
+      ser.n <- toString(ID_1$N.OC)
+      ser.s <- toString(ID_1$S.OC)
+      ser.e <- toString(ID_1$E.OC)
+      ser.w <- toString(ID_1$W.OC)
       w <- trw.series[,c(ser.n, ser.s, ser.e, ser.w)]
       if(length(w[,1])!=length(w[,2]) | length(w[,1])!=length(w[,3]) | length(w[,1])!=length(w[,4])){w <- .replace(w)}
       widths<-.widthsCalculation(w)
@@ -132,19 +132,42 @@ taperCalcul<-function(trw.series,meta){
       oSW<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$W[last]*widths$W[last])))/4
       oNE<-(pi*sqrt(2*(widths$N[last]*widths$N[last]+widths$E[last]*widths$E[last])))/4
       oSE<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$E[last]*widths$E[last])))/4
-      oElipse2<-oNW+oSW+oNE+oSE
-    }else{
-      oElipse2<-0
+      oElipse1<-oNW+oSW+oNE+oSE
+      #print(subMeta1)
+      #print(subMeta2)
+      if(subMeta2$Level_ID!=999){
+        ser.n <- toString(ID_2$N.OC)
+        ser.s <- toString(ID_2$S.OC)
+        ser.e <- toString(ID_2$E.OC)
+        ser.w <- toString(ID_2$W.OC)
+        w <- trw.series[,c(ser.n, ser.s, ser.e, ser.w)]
+        if(length(w[,1])!=length(w[,2]) | length(w[,1])!=length(w[,3]) | length(w[,1])!=length(w[,4])){w <- .replace(w)}
+        widths<-.widthsCalculation(w)
+        last<-length(widths$cambAge)
+        oNW<-(pi*sqrt(2*(widths$N[last]*widths$N[last]+widths$W[last]*widths$W[last])))/4
+        oSW<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$W[last]*widths$W[last])))/4
+        oNE<-(pi*sqrt(2*(widths$N[last]*widths$N[last]+widths$E[last]*widths$E[last])))/4
+        oSE<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$E[last]*widths$E[last])))/4
+        oElipse2<-oNW+oSW+oNE+oSE
+      }else{
+        oElipse2<-0
+      }
+      rElipse1<-oElipse1/pi
+      rElipse2<-oElipse2/pi
+      
+      r<-data.frame(plot=plot,
+                    tree=tree,
+                    level=j,
+                    level.height=treeHeight1,
+                    taper=((rElipse1-rElipse2)/(treeHeight*10)),
+                    taper.angle=atan(0.5*((rElipse1-rElipse2)/(treeHeight*10)))*(180/pi))
+      
+      
+      res<-rbind(res,r)
     }
-    rElipse1<-oElipse1/pi
-    rElipse2<-oElipse2/pi
-    res$level.height[i]<-treeHeight1
-    res$taper[i]<-((rElipse1-rElipse2)/(treeHeight*10))
-    res$taper.angle[i]<-atan(0.5*res$taper[i])*(180/pi)
   }
-
   return(res)
-}
+} #Druhá verze téhle funkce
 
 ###########################################
 ### Function for estimating the number of missing rings from pith offset (as metadata tabel)
@@ -240,11 +263,11 @@ EMR <- function(trw.series, nyrs, p.off, method="TRW"){
 ###########################################
 
 RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
-
+  
   ID <- .IDdistinct(trw.series)
   trw.series.descend<-trw.series[ order(-as.numeric(row.names(trw.series))), ]
   mr.estimate[is.na(mr.estimate)]<-0
-
+  
   #One core per sampling height
   if (nsph==1){
     trw.result<-data.frame(matrix(NA, ncol = length(trw.series), nrow = (length(trw.series)+max(mr.estimate$MissingRings))))
@@ -264,7 +287,7 @@ RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
       trw.result[1:length(ser2),i]<-ser2
     }
   }
-
+  
   #Two cores per sampling height
   if(nsph==2){
     n <- substring(names(trw.series),1,(nchar(names(trw.series))-1))
@@ -284,7 +307,8 @@ RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
     }
     mr.estimate$Length<-len
     mr.estimate$nasf<-naFront
-
+    print(mr.estimate)
+    
     for(i in 1:length(n)){
       ind<-which(n[i]==mr.estimate$IDCore)
       miss<-mr.estimate$MissingRings[ind]
@@ -292,10 +316,11 @@ RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
       if(miss[1]==0 & miss[2]==0) m<-len
       if(miss[1]!=0 & miss[2]==0) m<-max(len)
       if(miss[1]==0 & miss[2]!=0) m<-max(len)
-      if(miss[1]!=0 & miss[2]!=0) m<-round(max(len)+(mean(miss)))
+      if(miss[1]!=0 & miss[2]!=0) m<-round(mean(len+miss))
       mr.estimate$LengthTotal[ind]<-m
     }
-
+    print(mr.estimate)
+    
     trw.result<-data.frame(matrix(NA, ncol = length(trw.series), nrow = max(mr.estimate$LengthTotal)))
     names(trw.result)<-names(trw.series)
     for(i in 1:length(n)){
@@ -316,7 +341,7 @@ RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
       trw.result[1:length(serB2),sB]<-serB2
     }
   }
-
+  
   #Four cores per sampling height
   if(nsph==4){
     n <- substring(names(trw.series),1,(nchar(names(trw.series))-1))
@@ -344,7 +369,7 @@ RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
         len<-mr.estimate$Length[ind]
         m<-c(0,0,0,0)
         if(miss[1]==0 & miss[2]==0 & miss[3]==0 & miss[4]==0) m<-len
-        if(miss[1]!=0 & miss[2]!=0 & miss[3]!=0 & miss[4]!=0) m[1:4]<-round(max(len)+(median(miss)))
+        if(miss[1]!=0 & miss[2]!=0 & miss[3]!=0 & miss[4]!=0) m[1:4]<-round(median(len+miss))
         if(miss[1]==0 | miss[2]==0 | miss[3]==0 | miss[4]==0) {
           abc<-subset(mr.estimate,IDCore==n[i] & MissingRings==0)
           m[1:4]<-max(abc$Length)
@@ -356,7 +381,7 @@ RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
         mr.estimate$LengthTotal[ind]<-m
       }else{;}
     }
-
+    
     trw.result<-data.frame(matrix(NA, ncol = length(trw.series), nrow = max(mr.estimate$LengthTotal)))
     names(trw.result)<-names(trw.series)
     for(i in 1:length(n)){
@@ -400,9 +425,8 @@ RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
         }
       }
     }
-
   }
-
+  
   start<-as.numeric(rownames(trw.series.descend)[1])
   end<-as.numeric(rownames(trw.series.descend)[1])-length(trw.result[,1])+1
   years<-c(start:end)
@@ -410,6 +434,7 @@ RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
   trw.result<-trw.result[ order(as.numeric(row.names(trw.result))), ]
   return(trw.result)
 }
+
 
 ############################################
 ### Apical growth chronologies
