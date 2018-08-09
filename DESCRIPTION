@@ -8,5 +8,5 @@ Description: Package to analyse time series of tree height growth.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports:
+Depends:
   dplR,ggplot2,cowplot
