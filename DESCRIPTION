@@ -9,4 +9,4 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-  dplR,ggplot2,cowpot
+  dplR,ggplot2,cowplot
