@@ -49,7 +49,7 @@
 }
 
 .IDdistinct_medium<-function(file){
-  tab <- data.frame(file$ID, NA, NA, NA)
+  tab <- data.frame(file["ID"], NA, NA, NA)
   colnames(tab) <- c("Code", "Plot_ID", "Tree_ID", "Level_ID") 
   series.names <- tab$Code
   for (i in 1:length(series.names)) # Looping one-by-one through the list of series
