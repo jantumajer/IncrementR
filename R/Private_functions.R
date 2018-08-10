@@ -64,7 +64,7 @@
   }
   mer <- merge(file, tab, by.x="ID", by.y="Code")
   mer <- mer[,-c(1)]
-  mer <- mer[c("Plot_ID", "Tree_ID", "Level_ID", "Level_cm")]
+  mer <- mer[c("Plot_ID", "Tree_ID", "Level_ID", "Level_cm", "Type.of.the.sample")]
   return(mer)
 }
 
