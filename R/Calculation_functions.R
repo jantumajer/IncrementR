@@ -262,7 +262,7 @@ EMR <- function(trw.series, p.off, nyrs, method="TRW"){
 ### no.series.per.height - number of cores from the same tree height for interpolation
 ###########################################
 
-RMR <- function (trw.series, meta, mr.estimate, nyrs=5, nsph=4) {
+RMR <- function (trw.series, mr.estimate, nyrs=5, nsph=4) {
   
   ID <- .IDdistinct(trw.series)
   trw.series.descend<-trw.series[ order(-as.numeric(row.names(trw.series))), ]
