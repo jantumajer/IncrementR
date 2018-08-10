@@ -11,6 +11,9 @@
 ######################
 
 drawEccentricityGraph<-function(trw,ecc,meta,plot,tree,withEccentricity=F,method="Schweingruber"){
+  
+  meta <- .IDdistinct_medium(meta)
+
   Schw<-ecc$Schweingruber
   Braa<-ecc$Braam
   Ales<-ecc$Alestalo
