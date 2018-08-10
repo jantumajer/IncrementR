@@ -411,9 +411,7 @@
 ### Supportive functions of various different functions
 ######################
 .widthGraphEccentricity<-function(trw,meta,vysky){
-  
-  meta <- .IDdistinct_medium(meta)
-  
+
   sirky<-rep(0,length(vysky))
   for(i in 1:length(meta)){
     sirky[i]<-sum(trw[,as.character(meta[i])], na.rm = T)
