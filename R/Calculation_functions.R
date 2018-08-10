@@ -89,6 +89,8 @@ BAIcalculation<-function(trw.series){
 
 taperCalcul<-function(trw.series,meta){
   
+  meta <- .IDdistinct_medium(meta)
+  
   #trw.series<-trw
   
   IDa<-.IDdistinct(trw.series)
@@ -441,6 +443,9 @@ RMR <- function (trw.series, mr.estimate, nyrs=5, nsph=4) {
 ############################################
 
 apical <- function (trw.series, meta, mr.estimate) {
+  
+  meta <- .IDdistinct_medium(meta)
+  
   j <- 1
   n.ring <- data.frame(ObservedRing=NA, MissingRing=NA, TotalRing=NA, Series=NA)
   n.ring.elev <- data.frame(TotalRing=NA, IDPlot=NA, IDTree=NA, IDLevel=NA, Pith=NA, Height.cm=NA, Speed.cmyr=NA, MeanSpeedError.cmyr=NA)
