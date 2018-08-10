@@ -3,6 +3,7 @@
 ###
 ### Function .IDdistinct         - separates codes of PlotID, TreeID, Elevation level of coring and aspect (direction of coring) from series name
 ###          .IDdistinct_simple  - ligth version of function .IDdistinct
+###          .IDdistinct_medium  - formating of ID code in meta file
 ###          .extractTreeHeights - extract tree heights from metadata file
 ###          .extractTRW         - extract tree ring data for specific tree
 ###
@@ -46,6 +47,27 @@
   lst <- list(IDCore=tab, IDAspect=merge)
   return(lst)
 }
+
+.IDdistinct_medium<-function(file){
+  tab <- data.frame(file$ID, NA, NA, NA)
+  colnames(tab) <- c("Code", "Plot_ID", "Tree_ID", "Level_ID") 
+  series.names <- tab$Code
+  for (i in 1:length(series.names)) # Looping one-by-one through the list of series
+  {
+    an.series <- as.character(series.names[i])
+    split <- strsplit(an.series, "_") # Splits the rest of the string using _ separator and ...
+    unlist <- t(data.frame(as.numeric(unlist(split)))) # ... creates a data frame from it.
+    tab[i,2] <- unlist[1,1] # Different parts of data frame are append to output table.
+    tab[i,3] <- unlist[1,2]
+    tab[i,4] <- unlist[1,3]
+    rm(an.series, split, unlist) # Memory clearing.
+  }
+  mer <- merge(file, tab, by.x="ID", by.y="Code")
+  mer <- mer[,-c(1)]
+  mer <- mer[c("Plot_ID", "Tree_ID", "Level_ID", "Level_cm")]
+  return(mer)
+}
+
 .IDdistinct_simple<-function(file){
   tab <- data.frame(colnames(file), NA, NA) # Creates table with original series names as rows
   tab<-tab[-c(1),]
@@ -65,6 +87,9 @@
 }#ID distinct for plot and tree only (no aspects etc.)
 
 .extractTreeHeights<-function(meta,plot=1,tree=1){
+  
+  meta <- .IDdistinct_medium(meta)
+  
   tree<-subset(subset(meta,IDPlot==plot & IDTree==tree))
   return(tree$Height)
 } #extract tree heights from meta data
@@ -386,6 +411,9 @@
 ### Supportive functions of various different functions
 ######################
 .widthGraphEccentricity<-function(trw,meta,vysky){
+  
+  meta <- .IDdistinct_medium(meta)
+  
   sirky<-rep(0,length(vysky))
   for(i in 1:length(meta)){
     sirky[i]<-sum(trw[,as.character(meta[i])], na.rm = T)
