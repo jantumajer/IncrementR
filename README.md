@@ -48,10 +48,6 @@ If the number of estimated tree-rings differs from the other cores of the same h
 
 > Function `taperCalcul` calculates taper and taper angle between subsequent sampling heights for all trees. The inputs are `trw.series` (containing tree-ring series) and `meta` (metadata containing the sampling heights in cm in column “Level_cm”). 
 
-```BAIcalculation(trw.series)```
-
-> Function `BAIcalculation` creates a series of basal area increments for each sampling level. It requires ideally four cores per one sampling point, however, calculation will run also with 3 or 2 cores per level. The main difference of this function comparing functions `bai.in` and `bai.out` (dplR package) is consideration of eccentric tree-rings. The only input argument of this function is `trw.series` (containing cross dated tree-ring series and, optionally, replaced missing tree-rings nearby the pith using `EMR` and `RMR`). The output of this function is a data frame containing series of basal area increments for each sampling level.
-
 ```drawEccentricityGraph (trw, ecc, meta, plot, tree, withEccentricity=T, method="Schweingruber")```
 
 > First graphical function of “IncrementR” package is `drawEccentricityGraph`. Argument `trw` represents a data frame with tree-ring width series (possibly) previously corrected for missing rings nearby the pith using `RMR`. Argument `ecc` contains output of eccentricity function.  Arguments `plot` and `tree` specify a tree which will be drawn, argument `meta` refers to a metadata file with sampling heights of each level in cm (column “Level_cm”). Logical argument `withEccentricity` specifies whether the graph will show only stem profile or stem profile with eccentricity indices; and, finally, `method` defines index to be drawn (available options include `“Alestalo”`, `“Braam”` and `“Schweingruber”`). The output consists of two graphs of stem profiles (E-W and S-N) with respective eccentricity indices of each sampling level.
@@ -59,10 +55,6 @@ If the number of estimated tree-rings differs from the other cores of the same h
 ```drawCrossSectionProfile (trw.series, plot, tree, level, show.legend=T)```
 
 > Cross section profile based on approximation of cross section as an ellipse can be drawn for each sampling level. The function `drawCrossSectionProfile` has arguments specifying the cross section (`plot`, `tree` and `level`) to be plot; `trw.series` (data frame containing tree-ring width series, possibly previously corrected using `RMR`); and logical argument `show.legend` specifying if the legend (colours of different calendar years) will be drawn.
-
-```drawBAI(baiFile, plot=1,tree=1,logscale=F, show.legend=T)```
-
-> The output of function `BAIcaclulation` can be drawn using `drawBAI` function as a line-chart. Arguments of this function include `baiFile` (output of `BAIcalculation` function); arguments `plot` and `tree` specify a tree to be plot. Logical argument `logscale` specifies whether the result should be presented on a log scaled y-axis; and logical argument `show.legend` specifies whether the legend will be drawn.
 
 ```drawTaper(taperFile, plot=1,tree=1, variant="Taper")```
 
