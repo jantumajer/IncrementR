@@ -53,7 +53,7 @@ Eccentricity <- function (trw.series, complete=FALSE)
 ### Expects pith-offset=NULL (use RMR corrected series as input)
 ###########################################
 
-BAIcalculation<-function(trw.series){
+BAICalcul<-function(trw.series){
 
   IDs<-.IDdistinct(trw.series) # ID extrapolation
 
