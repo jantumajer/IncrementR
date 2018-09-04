@@ -70,7 +70,7 @@
 
 .IDdistinct_simple<-function(file){
   tab <- data.frame(colnames(file), NA, NA) # Creates table with original series names as rows
-  tab<-tab[-c(1),]
+  # tab<-tab[-c(1),]
   colnames(tab) <- c("Code", "IDPlot", "IDTree") # Appends 4 new columns (IDPlot, ...) to the table
   series.names <- tab$Code
   for (i in 1:length(series.names)) # Looping one-by-one through the list of series
