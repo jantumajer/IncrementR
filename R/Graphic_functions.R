@@ -125,11 +125,11 @@ drawTaper<-function(taperFile,plot=1,tree=1,variant="Taper"){
   whatDraw<-whatDraw[whatDraw$tree==tree,]
   if(variant=="Taper"){
     p<-ggplot(data=whatDraw, aes(x=level.height, y=taper, group=1)) + geom_line(size=1.3) + geom_point(size=5)
-    p<-p+ labs(colour="Stem taper", x="Sampling height", y="Taper")
+    p<-p+ labs(colour="Stem taper", x="Sampling height", y="Taper [%]")
   }
   if(variant=="Angle"){
     p<-ggplot(data=whatDraw, aes(x=level.height, y=taper.angle, group=1)) + geom_line(size=1.3) + geom_point(size=5)
-    p<-p+ labs(colour="Stem taper", x="Sampling height", y="Taper angle")
+    p<-p+ labs(colour="Stem taper", x="Sampling height", y="Taper angle [°]")
   }
   range<-c(0,(ceiling(max(whatDraw$level.height)/10)*10))
   p<-p+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
