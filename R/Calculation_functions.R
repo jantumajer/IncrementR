@@ -81,61 +81,69 @@ BAIcalculation<-function(trw.series){
 ###########################################
 
 taperCalcul<-function(trw.series,meta){
-  
+
   meta <- .IDdistinct_medium(meta)
-  
-  #trw.series<-trw
-  
+
   IDa<-.IDdistinct(trw.series)
   ID<-IDa$IDAspect
   res<-data.frame(plot=numeric(0),tree=numeric(0),level=numeric(0),level.height=numeric(0),taper=numeric(0),taper.angle=numeric(0))
-  
+
   trees<-paste(ID$IDPlot, ID$IDTree, sep="_")
   not<-unique(trees)
-  
+
+ 
+
   for(i in 1:length(not)){
+
     split <- strsplit(not[i], "_")
     unl <- unlist(split)
     plot<-as.numeric(unl[1])
     tree<-as.numeric(unl[2])
     sbTree<-subset(ID,IDPlot==plot & IDTree==tree)
-    sbTree<-sbTree[order(sbTree$IDLevel),] 
-    print(sbTree)
+    sbTree<-sbTree[order(sbTree$IDLevel),]
+    
     for(j in 1:(length(sbTree[,1]))){
-      print(j)
+
       ID_1<-subset(sbTree,IDLevel==sbTree$IDLevel[j])
       ID_2<-subset(sbTree,IDLevel==sbTree$IDLevel[(j+1)])
-      #print(ID_1)
-      #print(ID_2)
       subMeta1<-subset(meta,Plot_ID==ID_1$IDPlot & Tree_ID==ID_1$IDTree & Level_ID==ID_1$IDLevel)
       subMeta2<-subset(meta,Plot_ID==ID_1$IDPlot & Tree_ID==ID_1$IDTree & Level_ID==ID_2$IDLevel)
+
+     
+
       if(nrow(subMeta2) == 0){
         subMeta2<-subset(meta,Plot_ID==ID_1$IDPlot & Tree_ID==ID_1$IDTree & Level_ID==999)
       }
+
       treeHeight1<-subMeta1$Level_cm
       treeHeight2<-subMeta2$Level_cm
       treeHeight<-as.numeric(treeHeight2)-as.numeric(treeHeight1)
+
       ser.n <- toString(ID_1$N.OC)
       ser.s <- toString(ID_1$S.OC)
       ser.e <- toString(ID_1$E.OC)
       ser.w <- toString(ID_1$W.OC)
-      w <- trw.series[,c(ser.n, ser.s, ser.e, ser.w)]
+      w <- trw.series[,c(ser.n, ser.s, ser.e, ser.w)]   
+
       if(length(w[,1])!=length(w[,2]) | length(w[,1])!=length(w[,3]) | length(w[,1])!=length(w[,4])){w <- .replace(w)}
+
       widths<-.widthsCalculation(w)
       last<-length(widths$cambAge)
+
       oNW<-(pi*sqrt(2*(widths$N[last]*widths$N[last]+widths$W[last]*widths$W[last])))/4
       oSW<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$W[last]*widths$W[last])))/4
       oNE<-(pi*sqrt(2*(widths$N[last]*widths$N[last]+widths$E[last]*widths$E[last])))/4
       oSE<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$E[last]*widths$E[last])))/4
       oElipse1<-oNW+oSW+oNE+oSE
-      #print(subMeta1)
-      #print(subMeta2)
+     
       if(subMeta2$Level_ID!=999){
+
         ser.n <- toString(ID_2$N.OC)
         ser.s <- toString(ID_2$S.OC)
         ser.e <- toString(ID_2$E.OC)
         ser.w <- toString(ID_2$W.OC)
-        w <- trw.series[,c(ser.n, ser.s, ser.e, ser.w)]
+        w <- trw.series[,c(ser.n, ser.s, ser.e, ser.w)]  
+
         if(length(w[,1])!=length(w[,2]) | length(w[,1])!=length(w[,3]) | length(w[,1])!=length(w[,4])){w <- .replace(w)}
         widths<-.widthsCalculation(w)
         last<-length(widths$cambAge)
@@ -143,26 +151,26 @@ taperCalcul<-function(trw.series,meta){
         oSW<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$W[last]*widths$W[last])))/4
         oNE<-(pi*sqrt(2*(widths$N[last]*widths$N[last]+widths$E[last]*widths$E[last])))/4
         oSE<-(pi*sqrt(2*(widths$S[last]*widths$S[last]+widths$E[last]*widths$E[last])))/4
-        oElipse2<-oNW+oSW+oNE+oSE
-      }else{
+        oElipse2<-oNW+oSW+oNE+oSE     
+        }else{
         oElipse2<-0
-      }
-      rElipse1<-oElipse1/pi
-      rElipse2<-oElipse2/pi
-      
+        }
+
+      dElipse1<-(oElipse1/pi)/10
+      dElipse2<-(oElipse2/pi)/10  
+
       r<-data.frame(plot=plot,
                     tree=tree,
                     level=j,
                     level.height=treeHeight1,
-                    taper=((rElipse1-rElipse2)/(treeHeight*10)),
-                    taper.angle=atan(0.5*((rElipse1-rElipse2)/(treeHeight*10)))*(180/pi))
-      
-      
+                    taper=(((dElipse1-dElipse2)/(treeHeight))*100),
+                    taper.angle=(atan((dElipse1-dElipse2)/treeHeight)*180)/pi)
+
       res<-rbind(res,r)
     }
   }
   return(res)
-} #Druhá verze téhle funkce
+}
 
 ###########################################
 ### Function for estimating the number of missing rings from pith offset (as metadata tabel)
