@@ -49,36 +49,29 @@ Eccentricity <- function (trw.series, complete=FALSE)
 
 ###########################################
 ### Function for calculation of BAI index,
-### A new approach for BAI calculation baseo on approximation of tree ring to ellipse
-### Used arguments of this function are stored TRW (data.frame name), plot and tree ID (number)
+### Averages all series from single coring level and than applieds BAI.in from dplR package
+### Expects pith-offset=NULL (use RMR corrected series as input)
 ###########################################
 
 BAIcalculation<-function(trw.series){
-  IDs<-.IDdistinct(trw.series)
-  result<-data.frame(cambAge=c(1:length(rownames(trw.series))))
-  rownames(result)<-rownames(trw.series)
-  coln<-"cambAge"
-  for(i in 1:length(IDs$IDAspect$IDPlot)){
-    plot<-IDs$IDAspect$IDPlot[i]
-    tree<-IDs$IDAspect$IDTree[i]
-    level<-IDs$IDAspect$IDLevel[i]
-    w <- .seriesTRW_one(trw.series,plot,tree,level)
-    if(length(w[,1])!=length(w[,2]) | length(w[,1])!=length(w[,3]) | length(w[,1])!=length(w[,4])){w <- .replace(w)}
-    widths<-.widthsCalculation(w)
-    baiCalculation<-data.frame(date=widths$date,cambAge=widths$cambAge,bai=rep(0,length(widths$date)))
-    area<-((pi*abs(widths$W)*abs(widths$N))/4)+((pi*abs(widths$N)*abs(widths$E))/4)+((pi*abs(widths$E)*abs(widths$S))/4)+((pi*abs(widths$S)*abs(widths$W))/4)
-    baiCalculation$bai<-area[1]
-    for(i in 2:length(baiCalculation$date)){
-      j<-i-1
-      baiCalculation$bai[i]<-area[i]-area[j]
-    }
-    coln<-c(coln,paste(plot, tree, level, sep="_"))
-    b<-c(rep("<NA>",length(result[,1])-length(baiCalculation[,3])),baiCalculation[,3])
-    result<-cbind(result, b)
+
+  IDs<-.IDdistinct(trw.series) # ID extrapolation
+
+  out.df<-data.frame(matrix(NA, ncol = length(IDs$IDAspect[,1]), nrow = length(trw.series[,1]))) # creates output df
+  rownames(out.df)<-rownames(trw.series)
+  names(out.df)<-paste(IDs$IDAspect$IDPlot,IDs$IDAspect$IDTree,IDs$IDAspect$IDLevel,sep="_") # rename colums in output df
+
+  # calculate rowmeans for trw series from each sampling level
+
+  for(i in 1:length(IDs$IDAspect[,1])){
+    sub.trw<-trw.series[,as.matrix(IDs$IDAspect)[i,4:length(IDs$IDAspect[i,])]]
+    mean.trw<-rowMeans(sub.trw,na.rm=T)
+    out.df[,i]<-mean.trw
   }
-  colnames(result)<-coln
-  result$cambAge <- NULL
-  return(result)
+
+  out.df<-bai.in(out.df, d2pith = NULL) #BAI calculation using bai.in function from package dplR
+  out.df[out.df=="NaN"]<-NA
+  return(out.df)
 }
 
 ###########################################
