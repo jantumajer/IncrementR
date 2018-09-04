@@ -48,6 +48,9 @@ If the number of estimated tree-rings differs from the other cores of the same h
 
 > Function `taperCalcul` calculates taper and taper angle between subsequent sampling heights for all trees. The inputs are `trw.series` (containing tree-ring series) and `meta` (metadata containing the sampling heights in cm in column “Level_cm”). 
 
+```BAICalcul (trw.series)```
+> Function `BAIcalculation` creates a series of basal area increments for each sampling level. It requires four cores per sampling point (i.e. level). First, it automatically averages all series coming from the same tree and sampling level and, subsequently, applies function `BAI.in` from dplR package to calculate area increments. The only input argument of this function is trw.series (containing cross-dated tree-ring width series and, optionally, modelled missing tree rings near to the pith using the functions `EMR` and `RMR`). The output of this function is a data frame containing a series of basal area increments for each sampling level.
+
 ```drawEccentricityGraph (trw, ecc, meta, plot, tree, withEccentricity=T, method="Schweingruber")```
 
 > First graphical function of “IncrementR” package is `drawEccentricityGraph`. Argument `trw` represents a data frame with tree-ring width series (possibly) previously corrected for missing rings nearby the pith using `RMR`. Argument `ecc` contains output of eccentricity function.  Arguments `plot` and `tree` specify a tree which will be drawn, argument `meta` refers to a metadata file with sampling heights of each level in cm (column “Level_cm”). Logical argument `withEccentricity` specifies whether the graph will show only stem profile or stem profile with eccentricity indices; and, finally, `method` defines index to be drawn (available options include `“Alestalo”`, `“Braam”` and `“Schweingruber”`). The output consists of two graphs of stem profiles (E-W and S-N) with respective eccentricity indices of each sampling level.
@@ -63,3 +66,6 @@ If the number of estimated tree-rings differs from the other cores of the same h
 ```drawApicalData(trw.series, apicalData, plot=1, tree=1)```
 
 > Arguments of `drawApicalData` function include `trw.series` (data frame containing tree-ring width series); `apicalData` (output of `apical` function); and `plot` and `tree` (specifying the tree to be visualized). The resulting plot consist of two parts – the left panel shows the number of “Total” tree-rings (i.e., measured tree-rings + estimated missing tree-rings nearby pith) in each sampling level along the stem; the right one shows mean height growth velocity between two consecutive sampling levels (points) together with mean errors of its estimates (error bars). 
+
+```drawBAI(baiFile, plot=1,tree=1,logscale=F, show.legend=T)```
+> The output of function `BAICalculcan` be plotted using the `drawBAI` function as a line chart with the x-axis showing calendar years and the y-axis showing the basal area increments of individual sampling levels from a single tree. The arguments of this function include baiFile (output of the BAIcalculation function); arguments plot and tree specify the tree to be plotted. Logical argument logscale specifies whether the result is presented on a log-scaled y-axis, and logical argument show.legend specifies whether the legend is drawn.
