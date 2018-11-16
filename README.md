@@ -1,6 +1,10 @@
 # IncrementR package: Analysing height growth of trees in R
 
-This package is designed to be used by members of dendrochronological comunity, especially those, who analyse height growth of trees. Specific tools were developed for input data in the form of tree-ring widths extracted from series of successive stem height levels. The main computed parameters provided by the package include height growth along the stem, changes of stem eccentricity, basal area increment considering elliptical tree-rings, and stem taper. The appropriate determination of average height growth depends on correct estimation of the number of tree-rings in different stem levels, which might be complicated by missing rings in off-pith cores. The presented package therefore contains also functions for common procedures for estimation of the number of missing tree-rings. Graphical visualisation of most results is possible. 
+This package is designed to be used by members of dendrochronological comunity, especially those, who analyse height growth of trees and lateral elongation of ramets of prostrate shrubs. Specific tools were developed for input data in the form of tree-ring widths extracted from series of successive stem height levels. The main computed parameters provided by the package include height growth along the stem, changes of stem eccentricity, and stem taper. The appropriate determination of average height growth depends on correct estimation of the number of tree-rings in different stem levels, which might be complicated by missing rings in off-pith cores. The presented package therefore contains also functions for common procedures for estimation of the number of missing tree-rings. Graphical visualisation of most results is possible. 
+
+# Installing instructions
+
+Technical note article describing individual steps of the use of IncrementR package was published in Dendrochronologia Journal. Its full reference is `Kašapr J., Tumajer J., Treml V. (in print): IncrementR: analysing height growth of trees and shrubs in R. Dendrochronologia. DOI 10.1016/j.dendro.2018.11.001` (the reference will be updated after final version of typeset article is published on the journal web page). We invite you to read the article before running the package at https://doi.org/10.1016/j.dendro.2018.11.001
 
 # Installing instructions
 
