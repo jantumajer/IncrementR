@@ -26,6 +26,7 @@ Use folowing syntax to access sample data:
 
 ```
 data(IncrementR_data)
+View(trw); View(meta); View(po)
 ```
 
 
