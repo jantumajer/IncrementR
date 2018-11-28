@@ -29,5 +29,8 @@ data(IncrmentR_data)
     # estimate of the number of tree-rings nearby the pith, which were missed by the core
   
   apical.growth <- apical(trw.series = trw, meta = meta, mr.estimate = missing.rings)
-    # 
+    # builds datframe with the total number of tree-rings (measured+missing) in individual coring levels 
+  
+  drawApicalData(trw.series = trw, apicalData = apical.series, plot = 8, tree = 2)
+    # plots the graph of apical growth
 }
