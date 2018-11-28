@@ -1,4 +1,5 @@
 \name{apical}
+\alias{apical}
 
 \title{Function to calculate series of apical(=hegith) growth of a tree or shrub ramet elongation}
 
