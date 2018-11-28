@@ -1,4 +1,5 @@
 \name{apical}
+\alias{apical}
 
 \title{Function to calculate series of apical(=height) growth of a tree stem or shrub ramet elongation}
 
