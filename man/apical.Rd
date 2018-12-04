@@ -18,7 +18,6 @@ apical function creates datasets storing total number of tree-rings (measured + 
 }
   
 \value{
-  The output of apical function is a list containing two dataframes:
   \item{N.ring_Core   }{  dataframe storing number of measured and estimated missing tree-rings for each  core}
   \item{N.ring_Level    }{  dataframe storing estimated number of total rings for each sampling level}
 }
