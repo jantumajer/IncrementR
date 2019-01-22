@@ -238,7 +238,7 @@ EMR <- function(trw.series, p.off, nyrs, method="TRW"){
       mean.trw <- mean(df.trw[(1:nyrs),1]) # mean of last nyrs tree-rings
       mean.bai <- mean(df.bai[(1:nyrs),1])
 
-      p.off.2 <- subset(p.off, subset=ID==as.character(data.frame(colnames(trw))[i,])) # Subset of pit.offset table to contain only row with tree, which is currently analysed
+      p.off.2 <- subset(p.off, subset=ID==as.character(data.frame(colnames(trw.series))[i,])) # Subset of pit.offset table to contain only row with tree, which is currently analysed
 
       if (as.numeric(p.off.2["P.OFFSET"])==0 && !is.na(p.off.2["P.OFFSET"])) {tab[j,1] <- 0; tab[j,2] <- as.character(data.frame(colnames(trw.series))[i,])}
       else
