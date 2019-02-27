@@ -4,7 +4,7 @@ This package is designed to be used by members of dendrochronological comunity, 
 
 # Installing instructions
 
-Technical note article describing individual steps of the use of IncrementR package was published in Dendrochronologia Journal. Its full reference is `Kašpar J., Tumajer J., Treml V. (in print): IncrementR: analysing height growth of trees and shrubs in R. Dendrochronologia. DOI 10.1016/j.dendro.2018.11.001` (the reference will be updated after final version of typeset article is published on the journal web page). We invite you to read the article before running the package at https://doi.org/10.1016/j.dendro.2018.11.001
+Technical note article describing individual steps of the use of IncrementR package was published in Dendrochronologia Journal. Its full reference is `Kašpar J., Tumajer J., Treml V. (in print): IncrementR: analysing height growth of trees and shrubs in R. Dendrochronologia. 53: 48-54. DOI 10.1016/j.dendro.2018.11.001` (the reference will be updated after final version of typeset article is published on the journal web page). We invite you to read the article before running the package at https://doi.org/10.1016/j.dendro.2018.11.001
 
 # Installing instructions
 
