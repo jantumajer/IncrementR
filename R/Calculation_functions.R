@@ -456,7 +456,7 @@ apical <- function (trw.series, meta, mr.estimate) {
 
   for (i in (1:ncol(trw.series))){
     df.trw <- data.frame(na.omit(trw.series[,i])) # Getting number of non-NA rings from trw series
-    miss.ring <- subset(mr.estimate, subset=Series==as.character(data.frame(colnames(trw))[i,])) # Number of missing rings is taken from dataframe previously created using EMR
+    miss.ring <- subset(mr.estimate, subset=Series==as.character(data.frame(colnames(trw.series))[i,])) # Number of missing rings is taken from dataframe previously created using EMR
 
     # Appending results to output dataframe
     n.ring[j,1] <- nrow(df.trw) # number of measured rings
