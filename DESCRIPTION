@@ -1,7 +1,7 @@
 Package: IncrementR
 Type: Package
 Title: Analysing tree height growth in R
-Version: 0.1.0
+Version: 0.2.0
 Author: Jakub Kaspar, Jan Tumajer, Vaclav Treml
 Maintainer: Jan Tumajer <tumajerj@natur.cuni.cz>
 Description: Package to analyse time series of tree height growth.
